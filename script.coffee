@@ -1,7 +1,7 @@
 
 # These only works from jonasfj.github.com/realtime-codemirror-example/
-APPID    = "908797014622"
-CLIENTID = "908797014622-31tl0h44jidpu71ficem41rudn0uqp6l.apps.googleusercontent.com"
+APPID    = "933489083039"
+CLIENTID = "933489083039-57ofdbe167trr8jrq0kjbg9okc77266t.apps.googleusercontent.com"
 
 # These only works from localhost:3335
 #APPID    = "908797014622"
@@ -17,7 +17,7 @@ $ ->
     readOnly:       true
   _editor.setValue("")
   _editor.setSize("100%", "400")
-  
+
   _client = new rtclient.RealtimeLoader
     appId:                  APPID
     clientId:               CLIENTID
@@ -26,7 +26,7 @@ $ ->
     defaultTitle:           "New real-time code-mirror session"
     initializeModel:        initializeModel
     onFileLoaded:           loadModel
-  
+
   # Create button click
   $('#btn-create').click ->
     return      if $('#btn-create').hasClass 'disabled'
@@ -34,7 +34,7 @@ $ ->
     $('#btn-open').addClass 'disabled'
     $('#btn-share').addClass 'disabled'
     _client.createNewFileAndRedirect()
-    
+
   # Open button click
   $('#btn-open').click ->
     return      if $('#btn-open').hasClass 'disabled'
@@ -55,7 +55,7 @@ $ ->
         .setCallback(openCallback)
         .build()
       picker.setVisible(true)
-  
+
   # Share button click
   $('#btn-share').click ->
     return      if $('#btn-share').hasClass 'disabled'
@@ -95,18 +95,18 @@ loadModel = (doc) ->
         $('#doc-name').attr('disabled', '')
         renameRequest = gapi.client.drive.files.patch
           fileId:   rtclient.params['fileId'],
-          resource: 
+          resource:
             title:  $('#doc-name').val()
         renameRequest.execute (resp) ->
           $('#doc-name').val resp.title
           $('#doc-name').removeAttr 'disabled'
-          
+
   # Enable share button
   $('#btn-share').removeClass 'disabled'
-  
+
   # Get markdown collaborative string from root element
   _markdown = doc.getModel().getRoot().get('markdown')
-  
+
   # Enable editing
   _editor.setOption('readOnly', false)
   _editor.setValue _markdown.getText()
@@ -145,5 +145,3 @@ synchronize = (editor, markdown) ->
     console.log "editor.replaceRange('', #{pos2str from}, #{pos2str to})"
     editor.replaceRange("", from, to)
     ignore_change = false
-
-
